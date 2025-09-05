@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Fill-up</title>
+  <style>
+    :root {
+      --overlay: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45));
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      text-align: center;
+      color: white;
+    }
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 56px 16px 80px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #222; /* fallback */
+    }
+    .active { display: block; }
+
+    /* Backgrounds (with reliable image URLs) */
+    #loginPage {
+      background-image:
+        var(--overlay),
+        url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80');
+    }
+    #registrationPage {
+      background-image:
+        var(--overlay),
+        url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80');
+    }
+    /* FIXED: new stable study/books image for the 3rd page */
+    #studentPage {
+      background-image:
+        var(--overlay),
+        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80');
+    }
+    #successPage {
+      background-image:
+        var(--overlay),
+        url('https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1600&q=80');
+    }
+
+    h1, p { text-shadow: 0 2px 8px rgba(0,0,0,.6); margin: 12px 0; }
+
+    form {
+      background: rgba(255,255,255,.92);
+      color: #111;
+      width: 320px;
+      max-width: 92vw;
+      margin: 24px auto 0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 0 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      background: #1f8f3a;
+      color: #fff;
+      padding: 10px 16px;
+      margin: 6px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { background: #166e2c; }
+    .ghost-btn {
+      background: transparent;
+      border: 1.5px solid #fff;
+    }
+
+    /* optional: smooth fade when switching pages */
+    .page { opacity: 0; transition: opacity .25s ease; }
+    .active { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <section id="loginPage" class="page active" aria-labelledby="loginTitle">
+    <h1 id="loginTitle">Login Page</h1>
+    <form onsubmit="showPage('registrationPage'); return false;">
+      <input type="text" placeholder="Enter Username" required />
+      <input type="password" placeholder="Enter Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <!-- REGISTRATION PAGE -->
+  <section id="registrationPage" class="page" aria-labelledby="regTitle">
+    <h1 id="regTitle">Registration Page</h1>
+    <form onsubmit="showPage('studentPage'); return false;">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="tel" placeholder="Phone Number" required />
+      <button type="submit">Next</button>
+    </form>
+  </section>
+
+  <!-- STUDENT DETAILS PAGE -->
+  <section id="studentPage" class="page" aria-labelledby="studTitle">
+    <h1 id="studTitle">Student Details</h1>
+    <form onsubmit="showPage('successPage'); return false;">
+      <input type="text" placeholder="Roll Number" required />
+      <input type="text" placeholder="Course" required />
+        <input type="text" placeholder="Institute" required><br><br>
+            <input type="text" placeholder="department" required><br><br>
+            <input type="text" placeholder="City" required><br><br>
+            <input type="text" placeholder="Address" required><br><br>
+      <input type="date" required />
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- SUCCESS PAGE -->
+  <section id="successPage" class="page" aria-labelledby="succTitle">
+    <h1 id="succTitle">Successfully Completed!</h1>
+    <p>Thank you for filling out the form.</p>
+    <button class="ghost-btn" onclick="showPage('loginPage')">Back to Login</button>
+  </section>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      // Scroll to top on each step for better UX
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
